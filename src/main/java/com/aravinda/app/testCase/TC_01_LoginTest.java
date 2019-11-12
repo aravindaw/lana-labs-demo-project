@@ -2,6 +2,7 @@ package com.aravinda.app.testCase;
 
 import com.aravinda.app.script.LoginScript;
 import org.openqa.selenium.Platform;
+import org.seleniumx.annotations.DriverSettings;
 import org.seleniumx.annotations.Script;
 import org.seleniumx.annotations.ServerSettings;
 import org.seleniumx.util.Set;
@@ -13,10 +14,10 @@ public class TC_01_LoginTest extends TestCase {
             PLATFORM = Platform.LINUX,
             BROWSER = Set.BROWSER.CHROME,
             VERSION = "1",
-            SERVER_PORT = "5555",
+            SERVER_PORT = "4444",
             SERVER_URL = "http://localhost",
             BASE_URL = "http://magellanic.lanalabs.com",
-            IMPLICIT_WAIT = 100)
+            IMPLICIT_WAIT = 1000)
 //    @DriverSettings(
 //            OS = Set.OS.MAC,
 //            WINDOW_SIZE = Set.WINDOW_SIZE.DEFAULT,

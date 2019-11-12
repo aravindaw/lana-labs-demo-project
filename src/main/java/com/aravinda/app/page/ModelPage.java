@@ -122,6 +122,10 @@ public class ModelPage extends PageObject {
     @CacheLookup
     private WebElement saveSelectfilterAttributes;
 
+    @FindBy(xpath = "//button[@type='button' and @disabled]/span[contains(text(),'Save')]")
+    @CacheLookup
+    private WebElement saveButtonDisabled;
+
     @FindBy(xpath = "//a[@role='button' and contains(text(),'EXIT')]")
     @CacheLookup
     private WebElement exitHelpOutline;
@@ -466,8 +470,12 @@ public class ModelPage extends PageObject {
      * @return page title.
      */
     public ModelPage SaveFilter() {
-        (new WebDriverWait(driver, timeout)).until(ExpectedConditions.elementToBeClickable(saveSelectfilterAttributes));
-        saveSelectfilterAttributes.click();
+        try {
+            saveSelectfilterAttributes.click();
+        } catch (Exception NoSuchElementException) {
+            (new WebDriverWait(driver, timeout)).until(ExpectedConditions.elementToBeClickable(saveSelectfilterAttributes));
+            saveSelectfilterAttributes.click();
+        }
         return this;
     }
 
@@ -477,6 +485,7 @@ public class ModelPage extends PageObject {
      * @return page title.
      */
     public ModelPage exitHelpOutLine() {
+        (new WebDriverWait(driver, timeout)).until(ExpectedConditions.visibilityOf(exitHelpOutline));
         if (exitHelpOutline.isEnabled()) {
             exitHelpOutline.click();
         }
@@ -536,6 +545,12 @@ public class ModelPage extends PageObject {
             WebElement pieSegment = driver.findElement(By.cssSelector(css));
             (new WebDriverWait(driver, timeout)).until(ExpectedConditions.visibilityOf(pieSegment));
             pieSegment.click();
+            try {
+                WebElement noValueFiltered = driver.findElement(By.xpath("//b[contains(text(),'Country filter')]/ancestor::mat-card//child::p[contains(text(),'no value filtered')]"));
+                (new WebDriverWait(driver, timeout)).until(ExpectedConditions.invisibilityOf(noValueFiltered));
+            } catch (Exception NoSuchElementException) {
+
+            }
             WebElement segmentCountryValue = driver.findElement(By.xpath("//*[@id='attributeFilterTooltipCountry']/div[@style='font-weight: bold;']"));
             (new WebDriverWait(driver, timeout)).until(ExpectedConditions.visibilityOf(segmentCountryValue));
             WebElement undo = driver.findElement(By.xpath("//*[@id='filterContainer']/div[6]/categorical-attribute-filter/mat-card/mat-card-actions/button[1]/span/mat-icon"));

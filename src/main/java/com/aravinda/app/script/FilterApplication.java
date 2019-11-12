@@ -34,6 +34,6 @@ public class FilterApplication extends Script {
             }
         }
         //assert case count
-        Assert.assertEquals(data.get("caseCount").trim(), caseCount.trim());
+        Assert.assertEquals(caseCount.trim(), data.get("caseCount").trim());
     }
 }
